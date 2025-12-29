@@ -1,12 +1,12 @@
+from requests import Response
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-from locations.categories import Categories, apply_category
 from locations.google_url import extract_google_position
-from locations.structured_data_spider import StructuredDataSpider
+from locations.items import Feature
 
 
-class ApcoaSpider(CrawlSpider, StructuredDataSpider):
+class ApcoaSpider(CrawlSpider):
     name = "apcoa"
     item_attributes = {"operator": "APCOA Parking", "operator_wikidata": "Q296108"}
     allowed_domains = [
@@ -29,7 +29,7 @@ class ApcoaSpider(CrawlSpider, StructuredDataSpider):
         "https://www.apcoa.ie/locations/all-locations/",  # Ireland
         "https://www.apcoa.it/parcheggi/",  # Italy
         "https://www.apcoa.nl/alle-locaties/",  # Netherlands
-        "https://www.apcoa.no/finnparkering/parkering/",  # Norway
+        "https://www.apcoa.no/finn-parkering/finn-en-parkeringsplass/byer-a-aa",  # Norway
         "https://www.apcoa.se/alla-staeder/",  # Sweden
         "https://www.apcoa.co.uk/parking-locations/all-locations/",  # UK
         "https://www.apcoa.pl/en/parking-locations/all-locations/",  # Poland
@@ -39,27 +39,43 @@ class ApcoaSpider(CrawlSpider, StructuredDataSpider):
         Rule(
             LinkExtractor(
                 allow=[
-                    ".*/parken/.*",  # Austria, Germany
-                    ".*/parkings-per-stad/.*",  # Belgium
-                    ".*/all-locations-by-city/.*",  # Denmark
-                    ".*/parking/.*",  # Ireland
-                    ".*/parcheggi-in/.*",  # Italy
-                    ".*/parkeerplaats/.*",  # Netherlands
-                    ".*/finn-parkering/.*",  # Norway
-                    ".*/parkering-i/.*",  # Sweden
-                    ".*/parking-in/.*",  # UK
+                    "/kurzparken/standorte/[^/]+$",  # Austria, Germany
+                    ".*/parkings-per-stad/",  # Belgium
+                    "/find-en-p-plads/lokationer/[^/]+$",  # Denmark
+                    "/location-overview/location/[^/]+$",  # Ireland
+                    "/sosta-breve/sedi/[^/]+",  # Italy
+                    "/kort-parkeren/locaties/[^/]+",  # Netherlands
+                    "/finn-parkering/lokasjoner/[^/]+$",  # Norway
+                    "/hitta-parkering/parkering/[^/]+$",  # Sweden
+                    "/find-parking/locations/[^/]+",  # UK
+                    "/parking-in/[^/]+",
+                    "/short-stay-parking/locations/[^/]+",
+                ]
+            )
+        ),
+        Rule(
+            LinkExtractor(
+                allow=[
+                    "/kurzparken/standorte/[^/]+/[^/]+$",  # Austria, Germany
+                    "/find-en-p-plads/lokationer/[^/]+/[^/]+$",  # Denmark
+                    "/location-overview/location/[^/]+/[^/]+$",  # Ireland
+                    "/sosta-breve/sedi/[^/]+/[^/]+",  # Italy
+                    "/kort-parkeren/locaties/[^/]+/[^/]+$",  # Netherlands
+                    "/finn-parkering/lokasjoner/[^/]+/[^/]+$",  # Norway
+                    "/hitta-parkering/parkering/[^/]+/[^/]+$",  # Sweden
+                    "/find-parking/locations/[^/]+/[^/]+$",  # UK
+                    "/parking-in/[^/]+/[^/]+$",
+                    "/short-stay-parking/locations/[^/]+/[^/]+$",
                 ]
             ),
-            callback="parse_sd",
-            follow=True,
-        )
+            callback="parse",
+        ),
     ]
 
-    def post_process_item(self, item, response, ld_data, **kwargs):
-        item["website"] = response.url
-        item["image"] = None
+    def parse(self, response: Response, **kwargs):
+        item = Feature()
+        item["branch"] = response.xpath('//*[@class="text-h3 inline"]//text()').get()
+        item["addr_full"] = response.xpath('//*[@class="main"]//span[2]/text()').get()
         extract_google_position(item, response)
-
-        apply_category(Categories.PARKING, item)
-
+        item["ref"] = item["website"] = response.url
         yield item

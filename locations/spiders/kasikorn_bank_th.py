@@ -11,7 +11,6 @@ from locations.items import Feature
 class KasikornBankTHSpider(Spider):
     name = "kasikorn_bank_th"
     item_attributes = {"brand_wikidata": "Q276557"}
-    requires_proxy = "TH"
 
     async def start(self) -> AsyncIterator[Request]:
         yield Request(

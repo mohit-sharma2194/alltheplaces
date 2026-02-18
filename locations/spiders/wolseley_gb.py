@@ -14,7 +14,6 @@ class WolseleyGBSpider(JSONBlobSpider):
     item_attributes = {"brand": "Wolseley", "brand_wikidata": "Q8030423"}
     start_urls = ["https://www.wolseley.co.uk/all-branches/"]
     custom_settings = {"ROBOTSTXT_OBEY": False}
-    requires_proxy = True
 
     def extract_json(self, response: Response) -> list[dict]:
         return chompjs.parse_js_object(response.xpath('//script[@id="__NEXT_DATA__"]/text()').get())["props"][

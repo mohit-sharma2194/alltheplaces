@@ -16,7 +16,6 @@ class JackWillsGBSpider(JSONBlobSpider):
     custom_settings = {
         "ROBOTSTXT_OBEY": False,
     }
-    requires_proxy = True
 
     def extract_json(self, response):
         return chompjs.parse_js_object(response.xpath('//script[contains(text(),"var stores = ")]/text()').get())

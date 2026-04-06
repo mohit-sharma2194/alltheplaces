@@ -9,7 +9,6 @@ class CrateandbarrelSpider(CrawlSpider, StructuredDataSpider):
     allowed_domains = ["www.crateandbarrel.com"]
     item_attributes = {"brand": "Crate & Barrel", "brand_wikidata": "Q5182604"}
     start_urls = ["https://www.crateandbarrel.com/stores/list-state/retail-stores"]
-    requires_proxy = True
     rules = [
         Rule(
             LinkExtractor(allow=r"stores\/list-state\/retail-stores\/([a-zA-Z]{2})$"),

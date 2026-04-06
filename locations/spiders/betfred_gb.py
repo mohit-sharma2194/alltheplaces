@@ -15,7 +15,6 @@ class BetfredGBSpider(JSONBlobSpider):
     name = "betfred_gb"
     allowed_domains = ["www.betfredgroup.com"]
     item_attributes = {"brand": "Betfred", "brand_wikidata": "Q4897425"}
-    requires_proxy = True
 
     async def start(self) -> AsyncIterator[FormRequest]:
         for region in postal_regions("GB"):

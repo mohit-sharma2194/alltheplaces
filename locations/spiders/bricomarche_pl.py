@@ -13,7 +13,6 @@ class BricomarchePLSpider(JSONBlobSpider):
     item_attributes = {"brand": "Bricomarché", "brand_wikidata": "Q2925147"}
     start_urls = ["https://www.bricomarche.pl/api/v1/pos/pos/poses.json"]
     locations_key = "results"
-    requires_proxy = True
 
     def post_process_item(self, item: Feature, response: Response, feature: dict) -> Iterable[Feature]:
         item["branch"] = item.pop("name").removeprefix("Bricomarché ")

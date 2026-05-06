@@ -14,7 +14,6 @@ class HuboNLSpider(Spider):
     name = "hubo_nl"
     item_attributes = {"brand": "Hubo", "brand_wikidata": "Q5473953", "extras": Categories.SHOP_DOITYOURSELF.value}
     start_urls = ["https://www.hubo.nl/winkels"]
-    requires_proxy = True
 
     def parse(self, response: Response) -> Iterable[Feature]:
         for script in response.xpath("//script/text()").getall():

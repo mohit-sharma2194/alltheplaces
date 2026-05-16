@@ -13,7 +13,6 @@ class BinnysUSSpider(Spider):
     item_attributes = {"brand": "Binny's Beverage Depot", "brand_wikidata": "Q30687714"}
     allowed_domains = ["binnys.com"]
     start_urls = ["https://www.binnys.com/store-locator/"]
-    requires_proxy = True
 
     def parse(self, response: Response, **kwargs: Any) -> Any:
         script = response.xpath('//script/text()[contains(.,"storesGroupedByState")]').get()

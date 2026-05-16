@@ -17,7 +17,6 @@ from locations.spiders.seven_eleven_au import SEVEN_ELEVEN_SHARED_ATTRIBUTES
 class KasikornBankTHSpider(Spider):
     name = "kasikorn_bank_th"
     item_attributes = {"brand_wikidata": "Q276557"}
-    requires_proxy = "TH"
 
     LOCATED_IN_MAPPINGS = [
         (["7-11", "7-ELEVEN"], SEVEN_ELEVEN_SHARED_ATTRIBUTES),

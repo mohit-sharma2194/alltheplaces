@@ -16,7 +16,6 @@ BRANDS = {
 class ArcelikGlobalTRSpider(Spider):
     name = "arcelik_global_tr"
     no_refs = True
-    requires_proxy = True
 
     async def start(self) -> AsyncIterator[Request]:
         for brand in BRANDS.keys():

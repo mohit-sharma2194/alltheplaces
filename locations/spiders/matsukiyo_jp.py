@@ -22,7 +22,6 @@ class MatsukiyoJPSpider(Spider):
     }
     start_urls = ["https://www.matsukiyococokara-online.com/map/s3/json/stores.json"]
     allowed_domains = ["www.matsukiyococokara-online.com"]
-    requires_proxy = True
     country_code = "JP"
 
     def parse(self, response: Response, **kwargs: Any) -> Any:

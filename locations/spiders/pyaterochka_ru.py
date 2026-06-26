@@ -10,7 +10,6 @@ class PyaterochkaRUSpider(Spider):
     name = "pyaterochka_ru"
     item_attributes = {"brand_wikidata": "Q1768969"}
     start_urls = ["https://5ka.ru/api/v2/stores/"]
-    requires_proxy = True
     custom_settings = {"DOWNLOAD_TIMEOUT": 300}  # To fetch quite big JSON
 
     def parse(self, response, **kwargs):

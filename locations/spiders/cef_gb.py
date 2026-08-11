@@ -14,7 +14,6 @@ class CefGBSpider(CrawlSpider, StructuredDataSpider):
         Rule(LinkExtractor(allow="/stores/", restrict_xpaths='//ul[@id="directory"]'), callback="parse_sd"),
     ]
     custom_settings = {"ROBOTSTXT_OBEY": False}
-    requires_proxy = True
 
     def post_process_item(self, item, response, ld_data):
         item["lat"], item["lon"] = url_to_coords(ld_data["hasmap"])

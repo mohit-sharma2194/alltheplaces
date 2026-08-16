@@ -12,7 +12,6 @@ class RedLobsterUSSpider(scrapy.Spider):
     start_urls = [
         "https://www.redlobster.com/api/location/GetLocations?latitude=0&longitude=0&radius=150000&limit=1000"
     ]
-    requires_proxy = True
 
     @staticmethod
     def parse_hours(hours: [dict]) -> OpeningHours:

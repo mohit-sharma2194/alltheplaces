@@ -3,20 +3,21 @@ from typing import Iterable
 
 from scrapy.http import Response, TextResponse
 
+from locations.camoufox_spider import CamoufoxSpider
 from locations.categories import Categories, apply_category
 from locations.hours import OpeningHours
 from locations.items import Feature
 from locations.json_blob_spider import JSONBlobSpider
 from locations.pipelines.address_clean_up import merge_address_lines
-from locations.user_agents import BROWSER_DEFAULT
+from locations.settings import DEFAULT_CAMOUFOX_SETTINGS
 
 
-class VersaceSpider(JSONBlobSpider):
+class VersaceSpider(JSONBlobSpider, CamoufoxSpider):
     name = "versace"
     item_attributes = {"brand": "Versace", "brand_wikidata": "Q696376"}
     allowed_domains = ["www.versace.com"]
     start_urls = ["https://www.versace.com/on/demandware.store/Sites-US-Site/en_US/Stores-Search"]
-    custom_settings = {"ROBOTSTXT_OBEY": False, "USER_AGENT": BROWSER_DEFAULT}
+    custom_settings = DEFAULT_CAMOUFOX_SETTINGS
 
     def extract_json(self, response: TextResponse) -> list[dict]:
         return response.json()["stores"]

@@ -12,7 +12,6 @@ class EkoBGSpider(LighthouseSpider):
     item_attributes = {"brand": "EKO", "brand_wikidata": "Q111603199"}
     allowed_domains = ["www.eko.bg"]
     start_urls = ["https://www.eko.bg/stations/karta-na-obektite/"]
-    requires_proxy = True  # Imperva
 
     def parse_item(self, item: Feature, location: Selector) -> Iterable[Feature]:
         item["name"] = None

@@ -11,7 +11,6 @@ class WebuyanycarGBSpider(CrawlSpider, StructuredDataSpider):
     allowed_domains = ["www.webuyanycar.com"]
     start_urls = ["https://www.webuyanycar.com/branch-locator/"]
     rules = [Rule(LinkExtractor(allow=".*/branch-locator/.*"), callback="parse_sd")]
-    requires_proxy = "GB"
 
     def post_process_item(self, item, response, ld_data, **kwargs):
         extract_google_position(item, response)

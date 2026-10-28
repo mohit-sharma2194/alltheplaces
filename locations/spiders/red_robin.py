@@ -7,7 +7,6 @@ class RedRobinSpider(NomNomSpider):
     name = "red_robin"
     item_attributes = {"brand": "Red Robin", "brand_wikidata": "Q7304886"}
     start_urls = ["https://www.redrobin.com/api/stores"]
-    requires_proxy = True
     drop_attributes = {"name"}
 
     def post_process_item(self, item, response, feature):

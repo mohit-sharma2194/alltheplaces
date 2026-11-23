@@ -13,7 +13,6 @@ class MomstouchKRSpider(Spider):
     name = "momstouch_kr"
     item_attributes = {"brand": "맘스터치", "brand_wikidata": "Q23044856"}
     start_urls = ["https://www.momstouch.co.kr/store/inner_shop_list.php?type=area"]
-    requires_proxy = "KR"  # Direct requests from ATP CI timed out.
     custom_settings = {"ROBOTSTXT_OBEY": False}
 
     def parse(self, response: HtmlResponse, **kwargs: Any) -> Iterable[Feature]:
